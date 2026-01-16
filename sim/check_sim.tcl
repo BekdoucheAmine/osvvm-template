@@ -3,7 +3,7 @@
 # -------------------------------
 
 # Path to the log file (adjust as needed)
-set logFile "$env($GITHUB_WORKSPACE)/sim/sim_RunAllTests/logs/sim_RunAllTests.log"
+set logFile "$env(GITHUB_WORKSPACE)/sim/sim_RunAllTests/logs/sim_RunAllTests.log"
 
 # Read the entire log
 if {![file exists $logFile]} {
