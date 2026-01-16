@@ -1,0 +1,58 @@
+name: vhdl-ci
+
+# Code runs only on pull request to main
+on:
+  pull_request:
+    branches:
+      - main
+
+
+jobs:
+  test:
+    # Ubuntu 24.04
+    runs-on: ubuntu-latest
+
+    steps:
+
+        - uses: actions/checkout@v2
+          with:
+            fetch-depth: 0
+
+        - name: Cache OSVVM
+          uses: actions/cache@v2
+          with:
+            path: $HOME/osvvm
+            key: ${{ runner.os }}-osvvm
+
+        - name: Install OSVVM if not cached
+          env:
+            OSVVM_DIR: $HOME/osvvm
+          run: stat $HOME/osvvm/.git || git clone https://github.com/OSVVM/OSVVM.git $HOME/osvvm
+
+        # ModelSim requires these 32-bit libraries to be installed: https://www.intel.com/content/www/us/en/programmable/support/support-resources/knowledge-base/solutions/rd05302012_638.html
+        # Some of these are technically only required for the GUI, but it won't load on a headless server without them.
+        - name: Install ModelSim dependencies
+          run: |
+            sudo dpkg --add-architecture i386
+            sudo apt-get update
+            sudo apt-get install lib32z1 lib32stdc++6 libexpat1:i386 libc6:i386 libsm6:i386 libncurses5:i386 libx11-6:i386 zlib1g:i386 libxext6:i386 libxft2:i386
+
+        # Save time on subsequent runs by caching the install of ModelSim.
+        # Download is ~1.5GB and combined with the installation process it takes over 3 minutes.
+        - name: Cache ModelSim
+          uses: actions/cache@v2
+          with:
+            path: $HOME/intelFPGA
+            key: ${{ runner.os }}-modelsim
+
+        - name: Install ModelSim if not cached
+          run: stat $HOME/intelFPGA/20.1/modelsim_ase || (curl 'https://download.altera.com/akdlm/software/acdsinst/20.1std.1/720/ib_installers/ModelSimSetup-20.1.1.720-linux.run' -o ModelSimSetup.run && chmod +x ModelSimSetup.run && ./ModelSimSetup.run --mode unattended --accept_eula 1 && sed -i 's/linux_rh60/linux/g' $HOME/intelFPGA/20.1/modelsim_ase/vco )
+
+        - name: Add ModelSim to PATH
+          run: echo "$HOME/intelFPGA/20.1/modelsim_ase/bin" >> $GITHUB_PATH
+
+        # Setup osvvm and launch simulation
+        - name: Run Simulation
+          run: |
+            cd $GITHUB_WORKSPACE/sim/
+            vsim -c -do "source setup_osvvm.tcl; source run_sim.tcl"
