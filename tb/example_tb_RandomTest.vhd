@@ -70,12 +70,11 @@ begin
                 bCounts(1) := bCounts(1)-1;
             end if;
 
-            expected_and    := a and b;
-            expected_or     := a or b;
-
             -- wait for signals to propagate
             wait for 1 ns;
-
+            -- Update expected values
+            expected_and    := a and b;
+            expected_or     := a or b;
             -- Check outputs
             AffirmIfEqual(and_res, expected_and, "AND  : Expected = "&to_string(expected_and)&",");
             AffirmIfEqual(or_res , expected_or , "OR   : Expected = "&to_string(expected_or)&",");

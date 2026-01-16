@@ -36,40 +36,44 @@ begin
 
         a <= '0';
         b <= '0';
-        expected_and    := a and b;
-        expected_or     := a or b;
         -- Wait for signals to propagate
         wait for 1 ns;
+        -- Update expected values
+        expected_and    := a and b;
+        expected_or     := a or b;
         -- Check outputs
         AffirmIfEqual(and_res, expected_and, "AND  : Expected = "&to_string(expected_and)&",");
         AffirmIfEqual(or_res , expected_or , "OR   : Expected = "&to_string(expected_or)&",");
 
         a <= '0';
         b <= '1';
-        expected_and    := a and b;
-        expected_or     := a or b;
         -- Wait for signals to propagate
         wait for 1 ns;
+        -- Update expected values
+        expected_and    := a and b;
+        expected_or     := a or b;
         -- Check outputs
         AffirmIfEqual(and_res, expected_and, "AND  : Expected = "&to_string(expected_and)&",");
         AffirmIfEqual(or_res , expected_or , "OR   : Expected = "&to_string(expected_or)&",");
 
         a <= '1';
         b <= '0';
-        expected_and    := a and b;
-        expected_or     := a or b;
         -- Wait for signals to propagate
         wait for 1 ns;
+        -- Update expected values
+        expected_and    := a and b;
+        expected_or     := a or b;
         -- Check outputs
         AffirmIfEqual(and_res, expected_and, "AND  : Expected = "&to_string(expected_and)&",");
         AffirmIfEqual(or_res , expected_or , "OR   : Expected = "&to_string(expected_or)&",");
 
         a <= '1';
         b <= '1';
-        expected_and    := a and b;
-        expected_or     := a or b;
         -- Wait for signals to propagate
         wait for 1 ns;
+        -- Update expected values
+        expected_and    := a and b;
+        expected_or     := a or b;
         -- Check outputs
         AffirmIfEqual(and_res, expected_and, "AND  : Expected = "&to_string(expected_and)&",");
         AffirmIfEqual(or_res , expected_or , "OR   : Expected = "&to_string(expected_or)&",");
