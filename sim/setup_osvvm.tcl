@@ -1,5 +1,5 @@
 # Set OSVVM installation directory
-set OSVVM_DIR $env(HOME)/osvvm
+set OSVVM_DIR $env(HOME)/OsvvmLibraries
 
 # Source OSVVM startup
 source "$OSVVM_DIR/Scripts/StartUp.tcl"

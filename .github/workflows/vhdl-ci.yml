@@ -26,8 +26,8 @@ jobs:
 
         - name: Install OSVVM if not cached
           env:
-            OSVVM_DIR: $HOME/osvvm
-          run: stat $HOME/osvvm/.git || git clone --recursive https://github.com/osvvm/OsvvmLibraries
+            OSVVM_DIR: $HOME/OsvvmLibraries
+          run: stat $HOME/OsvvmLibraries/.git || git clone --recursive https://github.com/osvvm/OsvvmLibraries
 
         # ModelSim requires these 32-bit libraries to be installed: https://www.intel.com/content/www/us/en/programmable/support/support-resources/knowledge-base/solutions/rd05302012_638.html
         # Some of these are technically only required for the GUI, but it won't load on a headless server without them.
