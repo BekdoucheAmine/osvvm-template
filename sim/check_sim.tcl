@@ -22,7 +22,7 @@ set lines [split $content "\n"]
 set resultLine ""
 for {set i [expr {[llength $lines]-1}]} {$i >= 0} {incr i -1} {
     set line [lindex $lines $i]
-    if {[string match "*sim_RunAllTests*" $line]} {
+    if {[string match "*Build: sim_RunAllTests*" $line]} {
         set resultLine $line
         break
     }
