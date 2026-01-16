@@ -6,4 +6,4 @@ library osvvm_example
 #----------------------------------------
 # Compile RTL
 #----------------------------------------
-analyze ..\src\example.vhd
+analyze ../src/example.vhd
