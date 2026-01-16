@@ -1,7 +1,6 @@
 architecture SimpleTest of TestCtrl is
     signal TestDone         : integer_barrier := 1;
     signal TestInit         : integer_barrier := 1;
-    signal TbID             : AlertLogIDType;
 begin
     ControlProc : process
     begin
