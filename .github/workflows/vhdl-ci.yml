@@ -21,7 +21,7 @@ jobs:
         - name: Cache OsvvmLibraries
           uses: actions/cache@v4
           with:
-            path: $HOME/OsvvmLibraries
+            path: ${{ env.HOME }}/OsvvmLibraries
             key: ${{ runner.os }}-OsvvmLibraries-${{ hashFiles('**/*.pro', '**/*.tcl') }}
 
         - name: Install OSVVM if not cached
@@ -45,15 +45,12 @@ jobs:
             sudo apt-get update
             sudo apt-get install tdom
 
-        - name: Prepare ModelSim directory
-          run: mkdir -p $HOME/intelFPGA
-
         # Save time on subsequent runs by caching the install of ModelSim.
         # Download is ~1.5GB and combined with the installation process it takes over 3 minutes.
         - name: Cache ModelSim
           uses: actions/cache@v4
           with:
-            path: $HOME/intelFPGA
+            path:  ${{ env.HOME }}/intelFPGA
             key: ${{ runner.os }}-modelsim-20.1.1.720
 
         - name: Install ModelSim if not cached
