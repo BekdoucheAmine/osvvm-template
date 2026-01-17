@@ -40,7 +40,7 @@ jobs:
         # CheckXML uses xml package
         - name: Install TCL dependencies
           run: |
-            sudo apt-get install tcllib
+            sudo apt-get install tdom
         
         # Save time on subsequent runs by caching the install of ModelSim.
         # Download is ~1.5GB and combined with the installation process it takes over 3 minutes.
