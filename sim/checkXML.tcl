@@ -17,7 +17,7 @@ set skipped 1
 
 proc startElement {name attList} {
     global DEBUG
-    
+
     global errors
     global failures
     global skipped
@@ -45,5 +45,4 @@ if {$errors != 0 || $failures != 0 || $skipped != 0} {
     puts "Build PASSED";
     set exit_code 0
 }
-
-quit -code $exit_code -f
+if {exit_code} {quit -code $exit_code -f}
