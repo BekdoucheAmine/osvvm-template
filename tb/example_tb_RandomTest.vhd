@@ -76,8 +76,8 @@ begin
             expected_and    := a and b;
             expected_or     := a or b;
             -- Check outputs
-            AffirmIfEqual(and_res, expected_and, "AND  : Expected = "&to_string(expected_and)&",");
-            AffirmIfEqual(or_res , expected_or , "OR   : Expected = "&to_string(expected_or)&",");
+            AffirmIfEqual(and_res, expected_or  , "AND  : Expected = "&to_string(expected_and)&",");
+            AffirmIfEqual(or_res , expected_and , "OR   : Expected = "&to_string(expected_or)&",");
 
 
             -- Exit loop if condition is met
