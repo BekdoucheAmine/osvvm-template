@@ -14,12 +14,12 @@ jobs:
 
     steps:
 
-        - uses: actions/checkout@v3
+        - uses: actions/checkout@v5
           with:
             fetch-depth: 0
 
         - name: Cache OsvvmLibraries
-          uses: actions/cache@v3
+          uses: actions/cache@v4
           with:
             path: $HOME/OsvvmLibraries
             key: ${{ runner.os }}-OsvvmLibraries-${{ hashFiles('**/*.pro', '**/*.tcl') }}
@@ -40,12 +40,13 @@ jobs:
         # CheckXML uses xml package
         - name: Install TCL dependencies
           run: |
+            sudo apt-get update
             sudo apt-get install tdom
         
         # Save time on subsequent runs by caching the install of ModelSim.
         # Download is ~1.5GB and combined with the installation process it takes over 3 minutes.
         - name: Cache ModelSim
-          uses: actions/cache@v3
+          uses: actions/cache@v4
           with:
             path: $HOME/intelFPGA
             key: ${{ runner.os }}-modelsim-20.1.1.720
