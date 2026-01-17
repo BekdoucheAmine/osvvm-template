@@ -8,22 +8,22 @@ on:
 
 
 jobs:
-  test:
+  OSVVM-Simulation:
     # Ubuntu 24.04
     runs-on: ubuntu-latest
 
     steps:
 
-        - uses: actions/checkout@v2
+        - uses: actions/checkout@v3
           with:
             fetch-depth: 0
 
         - name: Cache OsvvmLibraries
-          uses: actions/cache@v3
+          uses: actions/cache@4
           with:
             path: $HOME/OsvvmLibraries
-            key: ${{ runner.os }}-OsvvmLibraries
-
+            key: ${{ runner.os }}-OsvvmLibraries-${{ hashFiles('**/*.pro', '**/*.tcl') }}
+        
         - name: Install OSVVM if not cached
           env:
             OSVVM_DIR: $HOME/OsvvmLibraries
@@ -45,10 +45,10 @@ jobs:
         # Save time on subsequent runs by caching the install of ModelSim.
         # Download is ~1.5GB and combined with the installation process it takes over 3 minutes.
         - name: Cache ModelSim
-          uses: actions/cache@v3
+          uses: actions/cache@v4
           with:
             path: $HOME/intelFPGA
-            key: ${{ runner.os }}-modelsim
+            key: ${{ runner.os }}-modelsim-20.1.1.720
 
         - name: Install ModelSim if not cached
           run: stat $HOME/intelFPGA/20.1/modelsim_ase || (curl 'https://downloads.intel.com/akdlm/software/acdsinst/20.1std.1/720/ib_installers/ModelSimSetup-20.1.1.720-linux.run' -o ModelSimSetup.run && chmod +x ModelSimSetup.run && ./ModelSimSetup.run --mode unattended --accept_eula 1 && sed -i 's/linux_rh60/linux/g' $HOME/intelFPGA/20.1/modelsim_ase/vco )
