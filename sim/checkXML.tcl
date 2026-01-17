@@ -9,7 +9,13 @@ set xmlData [read $fh]
 close $fh
 
 # assumes DEBUG is 0 or 1
-if {$DEBUG} {puts "\x1b[33m(DEBUG)\x1b[0m.xml file found : $xmlFile\n Parsing..."}
+
+if {$DEBUG} {
+    puts -nonewline {\x1b[33m}
+    puts -nonewline "(DEBUG)"
+    puts -nonewline {\x1b[0m}
+    puts  " .xml file found : $xmlFile\n Parsing..."
+}
 
 set errors 1
 set failures 1
@@ -23,15 +29,24 @@ proc startElement {name attList} {
     global skipped
 
     array set attrs $attList
-
-    if {$DEBUG} {puts "\x1b[33m(DEBUG)\x1b[0m startElement \n name: $name\n attList: $attList"}
+    if {$DEBUG} {
+        puts -nonewline {\x1b[33m}
+        puts -nonewline "(DEBUG)"
+        puts -nonewline {\x1b[0m}
+        puts " startElement \n name: $name\n attList: $attList"
+    }
 
     if {$name eq "testsuites"} {
         set errors $attrs(errors)
         set failures $attrs(failures)
         set skipped $attrs(skipped)
 
-        if {$DEBUG} {puts "\x1b[33m(DEBUG)\x1b[0m errors = $errors, failures = $failures, skipped = $skipped"}
+        if {$DEBUG} {
+            puts -nonewline {\x1b[33m}
+            puts -nonewline "(DEBUG)"
+            puts -nonewline {\x1b[0m}
+            puts " errors = $errors, failures = $failures, skipped = $skipped"
+        }
     }
 }
 
@@ -40,11 +55,17 @@ p parse $xmlData
 
 if {$errors != 0 || $failures != 0 || $skipped != 0} {
     puts ".xml File: $xmlFile"
-    puts " \x1b[31mBuild: FAILLED\x1b[0m, Errors: $errors, Failures: $failures, Skipped: $skipped";
+    puts -nonewline {\x1b[31m}
+    puts -nonewline " Build FAILLED: "
+    puts -nonewline {\x1b[0m}
+    puts "Errors: $errors, Failures: $failures, Skipped: $skipped)";
     set exit_code 1
 } else {
     puts ".xml File: $xmlFile"
-    puts " \x1b[32mBuild: PASSED\x1b[0m, Errors: $errors, Failures: $failures, Skipped: $skipped";
+    puts -nonewline {\x1b[32m}
+    puts -nonewline " Build PASSED: "
+    puts -nonewline {\x1b[0m}
+    puts "Errors: $errors, Failures: $failures, Skipped: $skipped)";
     set exit_code 0
 }
 
