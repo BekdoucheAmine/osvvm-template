@@ -27,7 +27,7 @@ if {$DEBUG} {
 }
 
 # Print results
-puts ".xml File: $xmlFile"
+puts ".xml File: \033\[35m$xmlFile\033\[0m"
 
 if {$errors != 0 || $failures != 0 || $skipped != 0} {
     puts "Build: \033\[31mFAILED\033\[0m, Errors: $errors, Failures: $failures, Skipped: $skipped"
