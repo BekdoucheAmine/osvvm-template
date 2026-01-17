@@ -19,7 +19,7 @@ jobs:
             fetch-depth: 0
 
         - name: Cache OsvvmLibraries
-          uses: actions/cache@4
+          uses: actions/cache@3
           with:
             path: $HOME/OsvvmLibraries
             key: ${{ runner.os }}-OsvvmLibraries-${{ hashFiles('**/*.pro', '**/*.tcl') }}
@@ -45,7 +45,7 @@ jobs:
         # Save time on subsequent runs by caching the install of ModelSim.
         # Download is ~1.5GB and combined with the installation process it takes over 3 minutes.
         - name: Cache ModelSim
-          uses: actions/cache@v4
+          uses: actions/cache@v3
           with:
             path: $HOME/intelFPGA
             key: ${{ runner.os }}-modelsim-20.1.1.720
