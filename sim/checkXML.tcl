@@ -1,5 +1,8 @@
 package require xml
 
+global DEBUG
+global xmlFile
+
 # Read file into xmlData
 set fh [open $xmlFile r]
 set xmlData [read $fh]
@@ -14,7 +17,7 @@ set skipped 1
 
 proc startElement {name attList} {
     global DEBUG
-
+    
     global errors
     global failures
     global skipped
