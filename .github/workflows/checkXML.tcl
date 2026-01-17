@@ -30,9 +30,9 @@ if {$DEBUG} {
 puts ".xml File: $xmlFile"
 
 if {$errors != 0 || $failures != 0 || $skipped != 0} {
-    puts "\033\[31mBuild: FAILED\033\[0m, Errors: $errors, Failures: $failures, Skipped: $skipped"
+    puts "Build: \033\[31mFAILED\033\[0m, Errors: $errors, Failures: $failures, Skipped: $skipped"
     exit 1
 } else {
-    puts "\033\[32mBuild: PASSED\033\[0m, Errors: $errors, Failures: $failures, Skipped: $skipped"
+    puts "Build: \033\[32mPASSED\033\[0m, Errors: $errors, Failures: $failures, Skipped: $skipped"
     exit 0
 }

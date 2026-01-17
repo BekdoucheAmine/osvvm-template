@@ -65,5 +65,5 @@ jobs:
         - name: Check Results
           run: |
             cd $GITHUB_WORKSPACE/.github/workflows/
-            tclsh checkXML.tcl ../../sim/sim_build/sim_build.xml 1
-            tclsh checkXML.tcl ../../sim/xmlFile sim_RunAllTests/sim_RunAllTests.xml 0
+            tclsh checkXML.tcl ../../sim/sim_build/sim_build.xml 0
+            tclsh checkXML.tcl ../../sim/sim_RunAllTests/sim_RunAllTests.xml 0
