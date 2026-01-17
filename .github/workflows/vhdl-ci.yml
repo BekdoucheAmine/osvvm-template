@@ -19,7 +19,7 @@ jobs:
             fetch-depth: 0
 
         - name: Cache OsvvmLibraries
-          uses: actions/cache@3
+          uses: actions/cache@v3
           with:
             path: $HOME/OsvvmLibraries
             key: ${{ runner.os }}-OsvvmLibraries-${{ hashFiles('**/*.pro', '**/*.tcl') }}
