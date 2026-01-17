@@ -5,7 +5,7 @@ set DEBUG 0
 build build.pro
 
 # Specify xml file location
-set sim/xmlFile sim_build/sim_build.xml
+set xmlFile sim_build/sim_build.xml
 
 # Check Build Status
 source checkXML.tcl
@@ -14,7 +14,7 @@ source checkXML.tcl
 build RunAllTests.pro
 
 # Specify xml file location
-set sim/xmlFile sim_RunAllTests/sim_RunAllTests.xml
+set xmlFile sim_RunAllTests/sim_RunAllTests.xml
 
 # Check Simulation Status
 source checkXML.tcl
