@@ -10,7 +10,7 @@ set xmlData [read $fh]
 close $fh
 
 if {$DEBUG} {
-    puts "\033[33mDEBUG\033[0m .xml file found : $xmlFile\nParsing..."
+    puts "\033\[33mDEBUG\033\[0m .xml file found : $xmlFile\nParsing..."
 }
 
 # Parse XML using tdom
@@ -23,16 +23,16 @@ set failures [$root getAttribute failures 0]
 set skipped  [$root getAttribute skipped 0]
 
 if {$DEBUG} {
-    puts "\033[33mDEBUG\033[0m errors=$errors, failures=$failures, skipped=$skipped"
+    puts "\033\[33mDEBUG\033\[0m errors=$errors, failures=$failures, skipped=$skipped"
 }
 
 # Print results
 puts ".xml File: $xmlFile"
 
 if {$errors != 0 || $failures != 0 || $skipped != 0} {
-    puts "\033[31mBuild: FAILED\033[0m, Errors: $errors, Failures: $failures, Skipped: $skipped"
+    puts "\033\[31mBuild: FAILED\033\[0m, Errors: $errors, Failures: $failures, Skipped: $skipped"
     exit 1
 } else {
-    puts "\033[32mBuild: PASSED\033[0m, Errors: $errors, Failures: $failures, Skipped: $skipped"
+    puts "\033\[32mBuild: PASSED\033\[0m, Errors: $errors, Failures: $failures, Skipped: $skipped"
     exit 0
 }
