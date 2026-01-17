@@ -24,7 +24,7 @@ proc startElement {name attList} {
 
     array set attrs $attList
 
-    if {$DEBUG} {puts "\x1b[33m(DEBUG)\x1b[0m startElement \n name: $name\n attList: $attList)"}
+    if {$DEBUG} {puts "\x1b[33m(DEBUG)\x1b[0m startElement \n name: $name\n attList: $attList"}
 
     if {$name eq "testsuites"} {
         set errors $attrs(errors)
@@ -39,7 +39,6 @@ xml::parser p -elementstartcommand startElement
 p parse $xmlData
 
 if {$errors != 0 || $failures != 0 || $skipped != 0} {
-    PASSED\033[0m
     puts ".xml File: $xmlFile"
     puts " \x1b[31mBuild: FAILLED\x1b[0m, Errors: $errors, Failures: $failures, Skipped: $skipped";
     set exit_code 1
