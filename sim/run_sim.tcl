@@ -18,3 +18,6 @@ set xmlFile sim_RunAllTests/sim_RunAllTests.xml
 
 # Check Simulation Status
 source checkXML.tcl
+
+# Exit ModelSim
+quit -code 0 -f
