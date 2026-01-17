@@ -18,15 +18,16 @@ jobs:
           with:
             fetch-depth: 0
 
+        - name: Prepare OSVVM directory
+          run: mkdir -p $HOME/OsvvmLibraries
+
         - name: Cache OsvvmLibraries
           uses: actions/cache@v4
           with:
             path: $HOME/OsvvmLibraries
             key: ${{ runner.os }}-OsvvmLibraries-${{ hashFiles('**/*.pro', '**/*.tcl') }}
-        
+
         - name: Install OSVVM if not cached
-          env:
-            OSVVM_DIR: $HOME/OsvvmLibraries
           run: stat $HOME/OsvvmLibraries/.git || git clone --recursive https://github.com/osvvm/OsvvmLibraries $HOME/OsvvmLibraries
 
         # ModelSim requires these 32-bit libraries to be installed: https://www.intel.com/content/www/us/en/programmable/support/support-resources/knowledge-base/solutions/rd05302012_638.html
@@ -36,13 +37,16 @@ jobs:
             sudo dpkg --add-architecture i386
             sudo apt-get update
             sudo apt-get install lib32z1 lib32stdc++6 libexpat1:i386 libc6:i386 libsm6:i386 libncurses6:i386 libx11-6:i386 zlib1g:i386 libxext6:i386 libxft2:i386
-        
+
         # CheckXML uses xml package
         - name: Install TCL dependencies
           run: |
             sudo apt-get update
             sudo apt-get install tdom
-        
+
+        - name: Prepare ModelSim directory
+          run: mkdir -p $HOME/intelFPGA
+
         # Save time on subsequent runs by caching the install of ModelSim.
         # Download is ~1.5GB and combined with the installation process it takes over 3 minutes.
         - name: Cache ModelSim
@@ -62,7 +66,7 @@ jobs:
           run: |
             cd $GITHUB_WORKSPACE/sim/
             vsim -c -do "source setup_osvvm.tcl; source run_sim.tcl"
-        
+
         - name: Check Results
           run: |
             cd $GITHUB_WORKSPACE/.github/workflows/
