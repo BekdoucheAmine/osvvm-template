@@ -21,7 +21,7 @@ jobs:
         - name: Cache OsvvmLibraries
           uses: actions/cache@v4
           with:
-            path: ${{ env.HOME }}/OsvvmLibraries
+            path: /home/runner/OsvvmLibraries
             key: ${{ runner.os }}-OsvvmLibraries-${{ hashFiles('**/*.pro', '**/*.tcl') }}
 
         - name: Install OSVVM if not cached
@@ -50,7 +50,7 @@ jobs:
         - name: Cache ModelSim
           uses: actions/cache@v4
           with:
-            path:  ${{ env.HOME }}/intelFPGA
+            path:  /home/runner/intelFPGA
             key: ${{ runner.os }}-modelsim-20.1.1.720
 
         - name: Install ModelSim if not cached
