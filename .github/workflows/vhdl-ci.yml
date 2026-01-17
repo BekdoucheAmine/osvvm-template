@@ -18,9 +18,6 @@ jobs:
           with:
             fetch-depth: 0
 
-        - name: Prepare OSVVM directory
-          run: mkdir -p $HOME/OsvvmLibraries
-
         - name: Cache OsvvmLibraries
           uses: actions/cache@v4
           with:
@@ -28,7 +25,11 @@ jobs:
             key: ${{ runner.os }}-OsvvmLibraries-${{ hashFiles('**/*.pro', '**/*.tcl') }}
 
         - name: Install OSVVM if not cached
-          run: stat $HOME/OsvvmLibraries/.git || git clone --recursive https://github.com/osvvm/OsvvmLibraries $HOME/OsvvmLibraries
+          run: |
+            if [ ! -d "$HOME/OsvvmLibraries/.git" ]; then
+            git clone --recursive https://github.com/osvvm/OsvvmLibraries $HOME/OsvvmLibraries
+            fi
+            touch $HOME/OsvvmLibraries/.cache_marker
 
         # ModelSim requires these 32-bit libraries to be installed: https://www.intel.com/content/www/us/en/programmable/support/support-resources/knowledge-base/solutions/rd05302012_638.html
         # Some of these are technically only required for the GUI, but it won't load on a headless server without them.
@@ -56,7 +57,14 @@ jobs:
             key: ${{ runner.os }}-modelsim-20.1.1.720
 
         - name: Install ModelSim if not cached
-          run: stat $HOME/intelFPGA/20.1/modelsim_ase || (curl 'https://downloads.intel.com/akdlm/software/acdsinst/20.1std.1/720/ib_installers/ModelSimSetup-20.1.1.720-linux.run' -o ModelSimSetup.run && chmod +x ModelSimSetup.run && ./ModelSimSetup.run --mode unattended --accept_eula 1 && sed -i 's/linux_rh60/linux/g' $HOME/intelFPGA/20.1/modelsim_ase/vco )
+          run: |
+            if [ ! -d "$HOME/intelFPGA/20.1/modelsim_ase" ]; then
+            curl -L 'https://downloads.intel.com/akdlm/software/acdsinst/20.1std.1/720/ib_installers/ModelSimSetup-20.1.1.720-linux.run' -o ModelSimSetup.run
+            chmod +x ModelSimSetup.run
+            ./ModelSimSetup.run --mode unattended --accept_eula 1
+            sed -i 's/linux_rh60/linux/g' $HOME/intelFPGA/20.1/modelsim_ase/vco
+            fi
+            touch $HOME/intelFPGA/.cache_marker
 
         - name: Add ModelSim to PATH
           run: echo "$HOME/intelFPGA/20.1/modelsim_ase/bin" >> $GITHUB_PATH
