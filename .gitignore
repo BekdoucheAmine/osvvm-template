@@ -1,0 +1,8 @@
+# Ignore everything in sim/
+sim/*
+
+# Except for these files
+!sim/build.pro
+!sim/RunAllTests.pro
+!sim/run_sim.tcl
+!sim/setup_osvvm.tcl
