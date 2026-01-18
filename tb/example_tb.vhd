@@ -4,7 +4,7 @@ library ieee;
 entity example_tb is
 end entity;
 
-architecture TestHarness of example_tb is                                           
+architecture TestHarness of example_tb is
     -- Test Controle Component Declaration
     component TestCtrl is
         port(

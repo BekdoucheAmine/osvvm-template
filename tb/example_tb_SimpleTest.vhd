@@ -21,12 +21,12 @@ begin
         WaitForBarrier(TestDone, 50 ms);
 
         TranscriptClose;
-        
+
         EndOfTestReports(TimeOut => (now >= 50 ms));
         std.env.stop;
         wait;
     end process ControlProc;
- 
+
     MainProc : process
         variable expected_or    : std_logic;
         variable expected_and   : std_logic;
@@ -80,7 +80,7 @@ begin
 
         WaitForBarrier(TestDone);
         wait ;
-    end process MainProc; 
+    end process MainProc;
 end SimpleTest;
 
 configuration example_tb_SimpleTest of example_tb is

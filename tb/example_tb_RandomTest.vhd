@@ -10,7 +10,7 @@ begin
 
         -- Wait for testbench initialization
         wait for 0 ns; wait for 0 ns;
-        
+
         TranscriptOpen;
         SetTranscriptMirror(TRUE);
 
@@ -22,12 +22,12 @@ begin
         WaitForBarrier(TestDone, 50 ms);
 
         TranscriptClose;
-        
+
         EndOfTestReports(TimeOut => (now >= 50 ms));
         std.env.stop;
         wait;
     end process ControlProc;
- 
+
     MainProc : process
         variable aRV            : RandomPType;
         variable bRV            : RandomPType;
@@ -83,10 +83,10 @@ begin
             -- Exit loop if condition is met
             exit when aCounts = (0, 0) and bCounts = (0, 0);
         end loop SimulationLoop ;
-        
+
         WaitForBarrier(TestDone);
         wait;
-    end process MainProc; 
+    end process MainProc;
 end RandomTest;
 
 configuration example_tb_RandomTest of example_tb is

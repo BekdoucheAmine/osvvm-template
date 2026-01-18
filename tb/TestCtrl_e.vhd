@@ -3,7 +3,7 @@ library ieee;
 
 
 -- Import OSVVM packages
-library osvvm; 
+library osvvm;
     context osvvm.OsvvmContext;
 
 

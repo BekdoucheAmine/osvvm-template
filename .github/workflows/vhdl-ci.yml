@@ -8,7 +8,7 @@ on:
 
 
 jobs:
-  OSVVM-Simulation:
+  OSVVM-Sim:
     # Ubuntu 24.04
     runs-on: ubuntu-latest
 
