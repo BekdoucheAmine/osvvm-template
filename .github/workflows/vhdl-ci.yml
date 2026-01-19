@@ -1,5 +1,10 @@
 name: vhdl-ci
 
+# Define permissions for current workflow
+permissions:
+  contents: read
+  checks: write
+
 # Code runs only on pull request to main
 on:
   pull_request:
@@ -83,12 +88,18 @@ jobs:
         if: success() || failure() # always run even if the previous step fails
         with:
           report_paths: '$GITHUB_WORKSPACE/sim/sim_build/sim_build.xml'
+          token: ${{ secrets.GITHUB_TOKEN }}
+          check_annotations: true
+          include_passed: true
 
       - name: Publish Tests Report
         uses: mikepenz/action-junit-report@v5
         if: success() || failure() # always run even if the previous step fails
         with:
           report_paths: '$GITHUB_WORKSPACE/sim/sim_RunAllTests/sim_RunAllTests.xml'
+          token: ${{ secrets.GITHUB_TOKEN }}
+          check_annotations: true
+          include_passed: true
 
   lint:
     runs-on: ubuntu-latest
@@ -111,7 +122,7 @@ jobs:
       - name: Check VHDL files and Generate Report
         run: |
           cd $GITHUB_WORKSPACE
-          find . -name "*.vhd" -exec vsg -f {} -j vsg_report.xml \;
+          find . -name "*.vhd" -exec vsg -f {} --junit vsg_report.xml \;
 
       - name: Show JUnit XML
         run: cat $GITHUB_WORKSPACE/vsg_report.xml
@@ -124,3 +135,6 @@ jobs:
         if: success() || failure() # always run even if the previous step fails
         with:
           report_paths: '$GITHUB_WORKSPACE/vsg_report.xml'
+          token: ${{ secrets.GITHUB_TOKEN }}
+          check_annotations: true
+          include_passed: true
