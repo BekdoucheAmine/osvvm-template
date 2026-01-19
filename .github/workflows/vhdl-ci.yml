@@ -78,13 +78,17 @@ jobs:
           tclsh checkXML.tcl ../../sim/sim_build/sim_build.xml 0
           tclsh checkXML.tcl ../../sim/sim_RunAllTests/sim_RunAllTests.xml 0
 
-      - name: Publish Test Report
+      - name: Publish Build Report
         uses: mikepenz/action-junit-report@v5
         if: success() || failure() # always run even if the previous step fails
         with:
-          report_paths: |
-            '$GITHUB_WORKSPACE/sim/sim_build/sim_build.xml'
-            '$GITHUB_WORKSPACE/sim/sim_RunAllTests/sim_RunAllTests.xml
+          report_paths: '$GITHUB_WORKSPACE/sim/sim_build/sim_build.xml'
+
+      - name: Publish Tests Report
+        uses: mikepenz/action-junit-report@v5
+        if: success() || failure() # always run even if the previous step fails
+        with:
+          report_paths: '$GITHUB_WORKSPACE/sim/sim_RunAllTests/sim_RunAllTests.xml'
 
   lint:
     runs-on: ubuntu-latest
@@ -108,6 +112,9 @@ jobs:
         run: |
           cd $GITHUB_WORKSPACE
           find . -name "*.vhd" -exec vsg -f {} -j vsg_report.xml \;
+
+      - name: Show JUnit XML
+        run: cat $GITHUB_WORKSPACE/vsg_report.xml
 
       - name: Check XML file
         run: ls -l $GITHUB_WORKSPACE
