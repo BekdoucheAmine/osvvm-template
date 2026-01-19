@@ -116,12 +116,6 @@ jobs:
           cd $GITHUB_WORKSPACE
           vsg $(find . -name "*.vhd") --junit vsg_report.xml
 
-      - name: Show JUnit XML
-        run: cat $GITHUB_WORKSPACE/vsg_report.xml
-
-      - name: Check XML file
-        run: ls -l $GITHUB_WORKSPACE
-
       - name: Publish Test Report
         uses: mikepenz/action-junit-report@v5
         if: success() || failure() # always run even if the previous step fails
