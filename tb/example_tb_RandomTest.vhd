@@ -113,7 +113,7 @@ end architecture randomtest;
 configuration example_tb_randomtest of example_tb is
     for testharness
         for testctrl_inst : testctrl
-            use entity work.Testttrl(randomtest);
+            use entity work.Testctrl(randomtest);
         end for;
     end for;
 end example_tb_randomtest;
