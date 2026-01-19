@@ -89,24 +89,20 @@ jobs:
           cat $GITHUB_WORKSPACE/sim/sim_RunAllTests/sim_RunAllTests.xml
 
       - name: Publish Build Report
-        uses: mikepenz/action-junit-report@v5
+        uses: dorny/test-reporter@v1
         if: success() || failure() # always run even if the previous step fails
         with:
-          report_paths: '$GITHUB_WORKSPACE/sim/sim_build/sim_build.xml'
+          name: OSVVM Build Report
+          path: '$GITHUB_WORKSPACE/sim/sim_build/sim_build.xml'
           token: ${{ secrets.GITHUB_TOKEN }}
-          check_annotations: true
-          check_name: OSVVM Build Report
-          include_passed: true
 
       - name: Publish Tests Report
-        uses: mikepenz/action-junit-report@v5
+        uses: dorny/test-reporter@v1
         if: success() || failure() # always run even if the previous step fails
         with:
-          report_paths: '$GITHUB_WORKSPACE/sim/sim_RunAllTests/sim_RunAllTests.xml'
+          name: OSVVM Build Report
+          path: '$GITHUB_WORKSPACE/sim/sim_RunAllTests/sim_RunAllTests.xml'
           token: ${{ secrets.GITHUB_TOKEN }}
-          check_annotations: true
-          check_name: OSVVM Tests Report
-          include_passed: true
 
   lint:
     runs-on: ubuntu-latest
