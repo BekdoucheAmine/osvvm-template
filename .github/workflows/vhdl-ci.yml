@@ -87,7 +87,7 @@ jobs:
         uses: mikepenz/action-junit-report@v5
         if: success() || failure() # always run even if the previous step fails
         with:
-          report_paths: $GITHUB_WORKSPACE/sim/sim_RunAllTests/sim_RunAllTests.xml
+          report_paths: sim/sim_RunAllTests/sim_RunAllTests.xml
           token: ${{ secrets.GITHUB_TOKEN }}
           check_annotations: true
           check_name: OSVVM Tests Report
@@ -126,7 +126,7 @@ jobs:
         uses: mikepenz/action-junit-report@v5
         if: success() || failure() # always run even if the previous step fails
         with:
-          report_paths: $GITHUB_WORKSPACE/vsg_report.xml
+          report_paths: vsg_report.xml
           token: ${{ secrets.GITHUB_TOKEN }}
           check_annotations: true
           check_name: VSG Lint Report
