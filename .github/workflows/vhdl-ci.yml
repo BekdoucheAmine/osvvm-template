@@ -8,72 +8,108 @@ on:
 
 
 jobs:
-  OSVVM-Sim:
+  test:
     # Ubuntu 24.04
     runs-on: ubuntu-latest
-
     steps:
 
-        - uses: actions/checkout@v5
-          with:
-            fetch-depth: 0
+      - name: Check out Git repository
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
 
-        - name: Cache OsvvmLibraries
-          uses: actions/cache@v4
-          with:
-            path: /home/runner/OsvvmLibraries
-            key: ${{ runner.os }}-OsvvmLibraries-${{ hashFiles('**/*.pro', '**/*.tcl') }}
+      - name: Cache OsvvmLibraries
+        uses: actions/cache@v4
+        with:
+          path: /home/runner/OsvvmLibraries
+          key: ${{ runner.os }}-OsvvmLibraries-${{ hashFiles('**/*.pro', '**/*.tcl') }}
 
-        - name: Install OSVVM if not cached
-          run: |
-            if [ ! -d "$HOME/OsvvmLibraries/.git" ]; then
-            git clone --recursive https://github.com/osvvm/OsvvmLibraries $HOME/OsvvmLibraries
-            fi
-            touch $HOME/OsvvmLibraries/.cache_marker
+      - name: Install OSVVM if not cached
+        run: |
+          if [ ! -d "$HOME/OsvvmLibraries/.git" ]; then
+          git clone --recursive https://github.com/osvvm/OsvvmLibraries $HOME/OsvvmLibraries
+          fi
+          touch $HOME/OsvvmLibraries/.cache_marker
 
-        # ModelSim requires these 32-bit libraries to be installed: https://www.intel.com/content/www/us/en/programmable/support/support-resources/knowledge-base/solutions/rd05302012_638.html
-        # Some of these are technically only required for the GUI, but it won't load on a headless server without them.
-        - name: Install ModelSim dependencies
-          run: |
-            sudo dpkg --add-architecture i386
-            sudo apt-get update
-            sudo apt-get install lib32z1 lib32stdc++6 libexpat1:i386 libc6:i386 libsm6:i386 libncurses6:i386 libx11-6:i386 zlib1g:i386 libxext6:i386 libxft2:i386
+      # ModelSim requires these 32-bit libraries to be installed: https://www.intel.com/content/www/us/en/programmable/support/support-resources/knowledge-base/solutions/rd05302012_638.html
+      # Some of these are technically only required for the GUI, but it won't load on a headless server without them.
+      - name: Install ModelSim dependencies
+        run: |
+          sudo dpkg --add-architecture i386
+          sudo apt-get update
+          sudo apt-get install lib32z1 lib32stdc++6 libexpat1:i386 libc6:i386 libsm6:i386 libncurses6:i386 libx11-6:i386 zlib1g:i386 libxext6:i386 libxft2:i386
 
-        # CheckXML uses xml package
-        - name: Install TCL dependencies
-          run: |
-            sudo apt-get update
-            sudo apt-get install tdom
+      # CheckXML uses xml package
+      - name: Install TCL dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install tdom
 
-        # Save time on subsequent runs by caching the install of ModelSim.
-        # Download is ~1.5GB and combined with the installation process it takes over 3 minutes.
-        - name: Cache ModelSim
-          uses: actions/cache@v4
-          with:
-            path:  /home/runner/intelFPGA
-            key: ${{ runner.os }}-modelsim-20.1.1.720
+      # Save time on subsequent runs by caching the install of ModelSim.
+      # Download is ~1.5GB and combined with the installation process it takes over 3 minutes.
+      - name: Cache ModelSim
+        uses: actions/cache@v4
+        with:
+          path:  /home/runner/intelFPGA
+          key: ${{ runner.os }}-modelsim-20.1.1.720
 
-        - name: Install ModelSim if not cached
-          run: |
-            if [ ! -d "$HOME/intelFPGA/20.1/modelsim_ase" ]; then
-            curl -L 'https://downloads.intel.com/akdlm/software/acdsinst/20.1std.1/720/ib_installers/ModelSimSetup-20.1.1.720-linux.run' -o ModelSimSetup.run
-            chmod +x ModelSimSetup.run
-            ./ModelSimSetup.run --mode unattended --accept_eula 1
-            sed -i 's/linux_rh60/linux/g' $HOME/intelFPGA/20.1/modelsim_ase/vco
-            fi
-            touch $HOME/intelFPGA/.cache_marker
+      - name: Install ModelSim if not cached
+        run: |
+          if [ ! -d "$HOME/intelFPGA/20.1/modelsim_ase" ]; then
+          curl -L 'https://downloads.intel.com/akdlm/software/acdsinst/20.1std.1/720/ib_installers/ModelSimSetup-20.1.1.720-linux.run' -o ModelSimSetup.run
+          chmod +x ModelSimSetup.run
+          ./ModelSimSetup.run --mode unattended --accept_eula 1
+          sed -i 's/linux_rh60/linux/g' $HOME/intelFPGA/20.1/modelsim_ase/vco
+          fi
+          touch $HOME/intelFPGA/.cache_marker
 
-        - name: Add ModelSim to PATH
-          run: echo "$HOME/intelFPGA/20.1/modelsim_ase/bin" >> $GITHUB_PATH
+      - name: Add ModelSim to PATH
+        run: echo "$HOME/intelFPGA/20.1/modelsim_ase/bin" >> $GITHUB_PATH
 
-        # Setup osvvm and launch simulation
-        - name: Run Simulation
-          run: |
-            cd $GITHUB_WORKSPACE/sim/
-            vsim -c -do "source setup_osvvm.tcl; source run_sim.tcl"
+      # Setup osvvm and launch simulation
+      - name: Run Simulation
+        run: |
+          cd $GITHUB_WORKSPACE/sim/
+          vsim -c -do "source setup_osvvm.tcl; source run_sim.tcl"
 
-        - name: Check Results
-          run: |
-            cd $GITHUB_WORKSPACE/.github/workflows/
-            tclsh checkXML.tcl ../../sim/sim_build/sim_build.xml 0
-            tclsh checkXML.tcl ../../sim/sim_RunAllTests/sim_RunAllTests.xml 0
+      - name: Check Results
+        run: |
+          cd $GITHUB_WORKSPACE/.github/workflows/
+          tclsh checkXML.tcl ../../sim/sim_build/sim_build.xml 0
+          tclsh checkXML.tcl ../../sim/sim_RunAllTests/sim_RunAllTests.xml 0
+
+  format:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install vsg
+
+      - name: Check VHDL files and Generate Report
+        run: |
+          cd $GITHUB_WORKSPACE
+          find . -name "*.vhd" -exec vsg -f {} -j vsg_report.xml\;
+
+      - name: Publish Test Report
+        uses: mikepenz/action-junit-report@v5
+        if: success() || failure() # always run even if the previous step fails
+        with:
+          report_paths: '$GITHUB_WORKSPACE/vsg_report.xml'
+
