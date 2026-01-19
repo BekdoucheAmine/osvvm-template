@@ -98,10 +98,10 @@ begin
 
 end architecture simpletest;
 
-configuration example_tb_SimpleTest of example_tb is
-    for TestHarness
-        for TestCtrl_inst : TestCtrl
-            use entity work.TestCtrl(SimpleTest);
+configuration example_tb_simpletest of example_tb is
+    for testharness
+        for testctrl_inst : testctrl
+            use entity work.testctrl(simpletest);
         end for;
     end for;
-end example_tb_SimpleTest;
+end example_tb_simpletest;

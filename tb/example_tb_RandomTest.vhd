@@ -110,10 +110,10 @@ begin
 
 end architecture randomtest;
 
-configuration example_tb_RandomTest of example_tb is
-    for TestHarness
-        for TestCtrl_inst : TestCtrl
-            use entity work.TestCtrl(RandomTest);
+configuration example_tb_randomtest of example_tb is
+    for testharness
+        for testctrl_inst : testctrl
+            use entity work.Testttrl(randomtest);
         end for;
     end for;
-end example_tb_RandomTest;
+end example_tb_randomtest;

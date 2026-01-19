@@ -33,18 +33,21 @@ architecture testharness of example_tb is
   signal or_res  : std_ulogic;
 
 begin
-    TestCtrl_inst : TestCtrl
-        port map(
-            a       => a,
-            b       => b,
-            and_res => and_res,
-            or_res  => or_res
-        );
-    example_inst : example
-        port map(
-            a       => a,
-            b       => b,
-            and_res => and_res,
-            or_res  => or_res
-        );
-end TestHarness;
+
+  testctrl_inst : component testctrl
+    port map (
+      a       => a,
+      b       => b,
+      and_res => and_res,
+      or_res  => or_res
+    );
+
+  example_inst : component example
+    port map (
+      a       => a,
+      b       => b,
+      and_res => and_res,
+      or_res  => or_res
+    );
+
+end architecture testharness;
