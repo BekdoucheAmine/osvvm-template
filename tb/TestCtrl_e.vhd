@@ -1,11 +1,10 @@
 library ieee;
-    use ieee.std_logic_1164.all;
-
+  use ieee.std_logic_1164.all;
 
 -- Import OSVVM packages
-library osvvm;
-    context osvvm.OsvvmContext;
 
+library osvvm;
+  context osvvm.osvvmcontext;
 
 -- Test Entity Declaration
 entity TestCtrl is
