@@ -1,6 +1,9 @@
 # Ignore everything in sim/
 sim/*
 
+# Ignore VS Code files
+.vscode/*
+
 # Except for these files
 !sim/build.pro
 !sim/RunAllTests.pro
