@@ -83,6 +83,11 @@ jobs:
           tclsh checkXML.tcl ../../sim/sim_build/sim_build.xml 0
           tclsh checkXML.tcl ../../sim/sim_RunAllTests/sim_RunAllTests.xml 0
 
+      - name: Show JUnit XML
+        run: |
+          cat $GITHUB_WORKSPACE/sim/sim_build/sim_build.xml
+          cat $GITHUB_WORKSPACE/sim/sim_RunAllTests/sim_RunAllTests.xml
+
       - name: Publish Build Report
         uses: mikepenz/action-junit-report@v5
         if: success() || failure() # always run even if the previous step fails
@@ -90,6 +95,7 @@ jobs:
           report_paths: '$GITHUB_WORKSPACE/sim/sim_build/sim_build.xml'
           token: ${{ secrets.GITHUB_TOKEN }}
           check_annotations: true
+          check_name: OSVVM Build Report
           include_passed: true
 
       - name: Publish Tests Report
@@ -99,6 +105,7 @@ jobs:
           report_paths: '$GITHUB_WORKSPACE/sim/sim_RunAllTests/sim_RunAllTests.xml'
           token: ${{ secrets.GITHUB_TOKEN }}
           check_annotations: true
+          check_name: OSVVM Tests Report
           include_passed: true
 
   lint:
@@ -122,7 +129,7 @@ jobs:
       - name: Check VHDL files and Generate Report
         run: |
           cd $GITHUB_WORKSPACE
-          find . -name "*.vhd" -exec vsg -f {} --junit vsg_report.xml \;
+          vsg $(find . -name "*.vhd") --junit vsg_report.xml
 
       - name: Show JUnit XML
         run: cat $GITHUB_WORKSPACE/vsg_report.xml
@@ -137,4 +144,5 @@ jobs:
           report_paths: '$GITHUB_WORKSPACE/vsg_report.xml'
           token: ${{ secrets.GITHUB_TOKEN }}
           check_annotations: true
+          check_name: VSG Lint Report
           include_passed: true
