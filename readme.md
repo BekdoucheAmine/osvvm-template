@@ -46,8 +46,7 @@ This repository demonstrates a simple **VHDL project** with **OSVVM** (Open Sour
 ## Prerequisites
 
 * GitHub Actions automatically handles OSVVM, ModelSim, and Tcl/Tdom setup.
-* Ubuntu (for CI) or any Linux/macOS/Windows environment with **ModelSim/QuestaSim**.
-* **Tcl/Tdom** package installed for XML result checking.
+* Ubuntu (for CI) or any Linux/macOS/Windows environment with **ModelSim/QuestaSim**
 
 ---
 
