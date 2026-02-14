@@ -77,12 +77,6 @@ jobs:
           cd $GITHUB_WORKSPACE/sim/
           vsim -c -do "source setup_osvvm.tcl; source run_sim.tcl"
 
-    #  - name: Check Results
-    #    run: |
-    #      cd $GITHUB_WORKSPACE/.github/workflows/
-    #      tclsh checkXML.tcl ../../sim/sim_build/sim_build.xml 0
-    #      tclsh checkXML.tcl ../../sim/sim_RunAllTests/sim_RunAllTests.xml 0
-
       - name: Publish Tests Report
         uses: mikepenz/action-junit-report@v5
         if: success() || failure() # always run even if the previous step fails
