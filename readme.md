@@ -1,15 +1,14 @@
-# Example VHDL OSVVM Project
+# OSVVM-CI Template
 
-This repository demonstrates a simple **VHDL project** with **OSVVM** (Open Source VHDL Verification Methodology) testbenches, including **simple and randomized tests** for an example combinational design. It is integrated with **GitHub Actions** for automated simulation and test reporting using ModelSim.
+This repository demonstrates a simple **VHDL project** with **OSVVM** (Open Source VHDL Verification Methodology) testbench, including **simple and randomized tests** for an example combinatorial design. It is integrated with **GitHub Actions** for automated simulation using ModelSim and test reporting using JUnit.
 
 ---
 
 ## Repository Structure
 
-```
-.
+```bash
+|
 ├── .github/workflows/      # GitHub Actions CI workflows
-│   ├── checkXML.tcl        # Tcl script to parse simulation XML results
 │   └── vhdl-ci.yml         # CI workflow definition
 ├── sim/                     # Simulation build scripts and OSVVM setup
 │   ├── build.pro            # Compile RTL
@@ -17,7 +16,7 @@ This repository demonstrates a simple **VHDL project** with **OSVVM** (Open Sour
 │   ├── run_sim.tcl          # Main simulation script
 │   └── setup_osvvm.tcl      # Setup OSVVM libraries
 ├── src/                     # RTL source code
-│   └── example.vhd          # Simple combinational logic example
+│   └── example.vhd          # Simple combinatorial logic example
 ├── tb/                      # Testbench source files
 │   ├── TestCtrl_e.vhd       # Test controller entity
 │   ├── example_tb.vhd       # Test harness
@@ -56,19 +55,17 @@ This repository demonstrates a simple **VHDL project** with **OSVVM** (Open Sour
 
 ### Run locally
 
+In ModelSim TCL console run the following commands
+
 ```bash
 # Setup OSVVM (assuming OSVVM installed at $HOME/OsvvmLibraries)
-tclsh sim/setup_osvvm.tcl
+source sim/setup_osvvm.tcl
 
 # Run simulation
-tclsh sim/run_sim.tcl
-
-# Verify simulation (0/1: debug prints in output)
-# arguments: 0: .xmlFile (dir/file.xml)
-#            1: DEBUG (0/1)
-tclsh checkXML.tcl ../../sim/sim_build/sim_build.xml 0
-tclsh checkXML.tcl ../../sim/sim_RunAllTests/sim_RunAllTests.xml 0
+source sim/run_sim.tcl
 ```
+
+---
 
 ### Add your own RTL and tests
 
@@ -83,8 +80,7 @@ tclsh checkXML.tcl ../../sim/sim_RunAllTests/sim_RunAllTests.xml 0
 
 * Triggered on pull requests to `main`.
 * Uses cached **OSVVM libraries** and **ModelSim installation** for faster builds.
-* Runs `checkXML.tcl` to verify `.xml` test reports.
-* Marks CI **FAILED** if any errors, failures, or skipped tests are detected.
+* Marks CI **FAILED** (via **JUnit Framework**) if any errors, failures, or skipped tests are detected.
 
 ---
 
@@ -92,3 +88,4 @@ tclsh checkXML.tcl ../../sim/sim_RunAllTests/sim_RunAllTests.xml 0
 
 * [OSVVM GitHub](https://github.com/osvvm/OsvvmLibraries)
 * [ModelSim User Guide](https://www.intel.com/content/www/us/en/programmable/quartushelp/20.1/mergedProjects/modelsim.html)
+* [JUnit Framework](https://github.com/junit-team/junit-framework)
