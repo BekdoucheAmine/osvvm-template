@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+         <loc>https://mydomain.org/mysite/latest/</loc>
+         <lastmod>2026-02-14</lastmod>
+    </url>
+    <url>
+         <loc>https://mydomain.org/mysite/latest/ci/deployment/</loc>
+         <lastmod>2026-02-14</lastmod>
+    </url>
+    <url>
+         <loc>https://mydomain.org/mysite/latest/ci/lint/</loc>
+         <lastmod>2026-02-14</lastmod>
+    </url>
+    <url>
+         <loc>https://mydomain.org/mysite/latest/ci/overview/</loc>
+         <lastmod>2026-02-14</lastmod>
+    </url>
+    <url>
+         <loc>https://mydomain.org/mysite/latest/ci/pipeline/</loc>
+         <lastmod>2026-02-14</lastmod>
+    </url>
+    <url>
+         <loc>https://mydomain.org/mysite/latest/ci/test/</loc>
+         <lastmod>2026-02-14</lastmod>
+    </url>
+    <url>
+         <loc>https://mydomain.org/mysite/latest/dev/setup/</loc>
+         <lastmod>2026-02-14</lastmod>
+    </url>
+</urlset>
